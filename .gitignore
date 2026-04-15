@@ -1,0 +1,55 @@
+# =========================
+# Node.js
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# =========================
+# Playwright
+# =========================
+playwright-report/
+test-results/
+blob-report/
+report/
+*.zip
+
+# Screenshots / videos (auto-generated)
+test-results/
+*.png
+*.webm
+
+# =========================
+# Environment Variables
+# =========================
+.env
+.env.*
+
+# =========================
+# Coverage
+# =========================
+coverage/
+
+# =========================
+# Build / Output
+# =========================
+dist/
+build/
+
+# =========================
+# IDEs
+# =========================
+.vscode/
+.idea/
+*.iml
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
