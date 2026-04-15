@@ -5,7 +5,7 @@ export class LogOutPage {
     this.page = page;
     this.avatar = page.locator("img#dropdownToggle");
     this.logout_btn = page.locator(
-      'a[href="http://13.51.170.24/merchant/logout"]',
+      `a[href="${URLS.logout}"]`,
     );
   }
   async navigate() {
