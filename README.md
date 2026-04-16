@@ -1,73 +1,73 @@
-# Tawla Automation
+# 🚀 Tawla Automation Framework
 
-Playwright automation starter framework organized with Page Object Model, shared fixtures, helpers, and sample tests.
+End-to-end test automation framework built using **Playwright** with a scalable and maintainable architecture based on the **Page Object Model (POM)**.
 
-## Project Structure
+---
 
-```text
+## 📌 Overview
+
+This framework is designed to support reliable and efficient UI automation for the Tawla platform. It focuses on:
+
+- Maintainability
+- Reusability
+- Scalability
+- Clean test design
+
+The project follows industry best practices to ensure long-term usability and easy collaboration across teams.
+
+---
+
+## 🏗️ Project Structure
 playwright-automation/
-|
-|-- tests/                 # Test files
-|   |-- login.spec.js
-|   `-- order.spec.js
-|
-|-- pages/                 # Page Object Model
-|   |-- LoginPage.js
-|   |-- DashboardPage.js
-|   `-- OrderPage.js
-|
-|-- fixtures/              # Base test setup
-|   `-- baseTest.js
-|
-|-- utils/                 # Helpers & test data
-|   |-- testData.js
-|   `-- helpers.js
-|
-|-- config/
-|   `-- env.js
-|
-|-- playwright.config.js
-|-- package.json
-`-- README.md
-```
+│
+├── tests/ # Test specifications
+│ ├── login.spec.js
+│ └── order.spec.js
+│
+├── pages/ # Page Object Models
+│ ├── LoginPage.js
+│ ├── DashboardPage.js
+│ └── OrderPage.js
+│
+├── fixtures/ # Custom test fixtures
+│ └── baseTest.js
+│
+├── utils/ # Utilities and test data
+│ ├── testData.js
+│ └── helpers.js
+│
+├── config/ # Environment configuration
+│ └── env.js
+│
+├── playwright.config.js # Playwright configuration
+├── package.json
+└── README.md
+---
 
-## Getting Started
+## ⚙️ Setup Instructions
 
-1. Install dependencies:
+### 1️⃣ Clone the repository
 
 ```bash
+git clone <repository-url>
+cd playwright-automation
 npm install
-```
-
-2. Install Playwright browsers:
-
-```bash
 npx playwright install
-```
+npx playwright test
+npx playwright test tests/login.spec.js
+npx playwright test --headed
+npx playwright test --debug
+npx playwright show-report
+config/env.js
 
-3. Set environment variables before running tests:
+🧩 Framework Highlights
+Page Object Model (POM) for separation of concerns
+Centralized configuration management
+Reusable fixtures for consistent test setup
+Modular utilities for common operations
+Clean and scalable folder structure
+Parallel execution support
 
-```powershell
-$env:BASE_URL="https://your-app-url.com"
-$env:TEST_USERNAME="your-user"
-$env:TEST_PASSWORD="your-password"
-```
+👨‍💻 Maintained By
 
-## Run Tests
-
-```bash
-npm test
-```
-
-Useful variants:
-
-- `npm run test:headed`
-- `npm run test:ui`
-- `npm run test:debug`
-- `npm run report`
-
-## Notes
-
-- The page locators are starter placeholders based on `data-testid` attributes.
-- Update the selectors and route paths to match the real Tawla application.
-- Sample credentials in `config/env.js` and `utils/testData.js` are only defaults for local scaffolding.
+Automation Team
