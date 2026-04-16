@@ -17,6 +17,6 @@ class LoginPage {
     await this.password.fill(pass);
     await this.loginBtn.click();
   }
-}
+} 
 
 module.exports = { LoginPage };

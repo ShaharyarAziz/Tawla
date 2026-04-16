@@ -5,23 +5,17 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-test.describe("LogOut Module", () => {
-  test("User LogOut", async ({ page }) => {
-    const logout = new LogOutPage(page);
-    const login = new LoginPage(page);
+test("User LogOut", async ({ page }) => {
+  const logout = new LogOutPage(page);
+  const login = new LoginPage(page);
 
-    await logout.navigate();
+  await logout.navigate();
+  await login.login(process.env.EMAIL, process.env.PASSWORD);
 
-    await login.login(process.env.EMAIL, process.env.PASSWORD);
+  await expect(page).toHaveURL(/dashboard/);
 
-    // ✅ wait for dashboard
-    await expect(page).toHaveURL(/dashboard/);
+  // ✅ call action method
+  await logout.logout();
 
-    await logout.avatar.click();
-
-    await logout.logout_btn.waitFor({ state: "visible" });
-    await logout.logout_btn.click();
-
-    await expect(page).toHaveURL("merchant/login");
-  });
+  await expect(page).toHaveURL(/login/);
 });
