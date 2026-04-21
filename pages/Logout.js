@@ -1,6 +1,6 @@
-import { URLS } from "../utils/url.js";
+const { URLS } = require("../utils/url.js");
 
-export class LogOutPage {
+class LogOutPage {
   constructor(page) {
     this.page = page;
     this.avatar = page.locator("#dropdownToggle");
@@ -25,3 +25,5 @@ export class LogOutPage {
     await this.page.locator(".logout-btn:visible").click();
   }
 }
+
+module.exports = { LogOutPage };

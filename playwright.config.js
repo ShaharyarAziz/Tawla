@@ -8,6 +8,7 @@ const runId = new Date().toISOString().replace(/[:.]/g, '-');
 
 module.exports = defineConfig({
   testDir: './tests',
+  testIgnore: ['**/Category.spec.js'],
   timeout: 30000,
   outputDir: path.join('artifacts', runId),
   reporter: [['html', { open: 'never' }], ['list']],

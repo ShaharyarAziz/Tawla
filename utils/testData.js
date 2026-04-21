@@ -1,12 +1,21 @@
-const users = {
-  validUser: {
-    email: 'angels.tawla@gmail.com',
-    password: 'Tawla@2025',
-  },
-  invalidUser: {
-    email: 'wrong',
-    password: '1234',
-  },
-};
+import { faker } from "@faker-js/faker";
 
-module.exports = { users };
+function getRandomFoodCategory() {
+  const adjectives = ["Spicy", "Grilled", "Crispy", "Hot", "BBQ", "Cheesy"];
+  const foods = ["Burger", "Pizza", "Biryani", "Pasta", "Sandwich", "Fries"];
+
+  const adj = faker.helpers.arrayElement(adjectives);
+  const food = faker.helpers.arrayElement(foods);
+
+  return `${adj} ${food}`;
+}
+function generateSubCategoryName() {
+  const adjectives = ["Spicy", "Grilled", "Crispy", "Hot", "BBQ", "Cheesy"];
+  const foods = ["Burger", "Pizza", "Biryani", "Pasta", "Sandwich", "Fries"];
+
+  const adj = faker.helpers.arrayElement(adjectives);
+  const food = faker.helpers.arrayElement(foods);
+
+  return `${adj} ${food}`;
+}
+export { getRandomFoodCategory, generateSubCategoryName };

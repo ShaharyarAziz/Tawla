@@ -6,6 +6,7 @@
   "scripts": {
     "test": "npx playwright test",
     "test:headed": "npx playwright test --headed",
+    "test:digital-menu": "npx playwright test tests/Digital_Menu/DigitalMenu.spec.js",
     "report": "npx playwright show-report",
     "test:report": "npx playwright test --headed && npx playwright show-report"
   },
@@ -22,6 +23,7 @@
     "@playwright/test": "^1.59.1"
   },
   "dependencies": {
+    "@faker-js/faker": "^10.4.0",
     "dotenv": "^17.4.2"
   }
 }
