@@ -66,4 +66,3 @@ class TakeOrderPage {
 }
 
 module.exports = { TakeOrderPage };
-
