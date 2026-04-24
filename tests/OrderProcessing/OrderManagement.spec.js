@@ -1,9 +1,9 @@
 const { test, expect } = require('@playwright/test');
 const path = require('path');
-const { LoginPage } = require('../pages/LoginPage');
-const { OrderManagementPage } = require('../pages/OrderManagement');
+const { LoginPage } = require('../../pages/LoginPage');
+const { OrderManagementPage } = require('../../pages/OrderProcessing/OrderManagement');
 
-require('dotenv').config({ path: path.resolve(__dirname, '../utils/.env') });
+require('dotenv').config({ path: path.resolve(__dirname, '../../utils/.env') });
 
 test('User opens Order Management', async ({ page }) => {
   test.setTimeout(120000);
