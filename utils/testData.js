@@ -18,4 +18,20 @@ function generateSubCategoryName() {
 
   return `${adj} ${food}`;
 }
-export { getRandomFoodCategory, generateSubCategoryName };
+function generateRandomPrice() {
+  const price = Math.floor(Math.random() * (500 - 100) + 100).toFixed(2);
+  return price.toString();
+}
+function generateFoodDescription() {
+  const dishes = ["pizza", "burger", "pasta", "biryani", "sandwich", "steak"];
+  const adjectives = ["spicy", "crispy", "juicy", "flavorful", "delicious"];
+  const extras = [
+    "served hot",
+    "with fresh herbs",
+    "with special sauce",
+    "chef special",
+  ];
+
+  return `A ${faker.helpers.arrayElement(adjectives)} ${faker.helpers.arrayElement(dishes)} ${faker.helpers.arrayElement(extras)}.`;
+}
+export { getRandomFoodCategory, generateSubCategoryName, generateRandomPrice, generateFoodDescription };
