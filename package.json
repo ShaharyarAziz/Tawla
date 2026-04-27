@@ -6,6 +6,12 @@
   "scripts": {
     "test": "npx playwright test",
     "test:headed": "npx playwright test --headed",
+    "test:take-order": "npx playwright test tests/OrderProcessing/TakeOrder.spec.js",
+    "test:take-order:headed": "npx playwright test tests/OrderProcessing/TakeOrder.spec.js --headed",
+    "test:order-management": "npx playwright test tests/OrderProcessing/OrderManagement.spec.js",
+    "test:order-management:headed": "npx playwright test tests/OrderProcessing/OrderManagement.spec.js --headed",
+    "test:ops": "npx playwright test tests/OrderProcessing/TakeOrder.spec.js tests/OrderProcessing/OrderManagement.spec.js",
+    "test:ops:headed": "npx playwright test tests/OrderProcessing/TakeOrder.spec.js tests/OrderProcessing/OrderManagement.spec.js --headed",
     "test:digital-menu": "npx playwright test tests/Digital_Menu/DigitalMenu.spec.js",
     "report": "npx playwright show-report",
     "test:report": "npx playwright test --headed && npx playwright show-report"
