@@ -5,14 +5,14 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 test.describe('Login Module', () => {
-  test('Valid Login', async ({ page }) => {
+  test.only('Valid Login', async ({ page }) => {
     const login = new LoginPage(page);
     await login.navigate();
     await login.login(process.env.EMAIL, process.env.PASSWORD);
     await expect(page).toHaveURL("/merchant/dashboard");
   });
 
-  test('Invalid Login', async ({ page }) => {
+  test.only('Invalid Login', async ({ page }) => {
     const login = new LoginPage(page);
     await login.navigate();
     await login.login(process.env.InvalidEmail, process.env.InvalidPassword);
