@@ -13,7 +13,6 @@ const { items } = require("../../pages/Digtial_Menu/items.js");
 dotenv.config();
 
 test.only("User adds Categories in Digital Menu", async ({ page }) => {
-  test.setTimeout(120000);
   const login = new LoginPage(page);
   const digitalMenu = new DigitalMenuPage(page);
   const category = new Category(page);
