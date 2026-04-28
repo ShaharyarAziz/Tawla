@@ -8,8 +8,9 @@ class OrderManagementPage {
     this.pendingOrder = page.locator('.order-management-card').filter({ hasText: 'Unpaid' }).filter({ hasText: 'Not Served' }).first();
     this.detailsTitle = page.getByText('Order Details', { exact: true }).first();
     this.payForOrderButton = page.getByRole('button', { name: 'Pay For Order' });
-    this.applePayButton = page.locator('input[name="payment_method"][value="2"]').first();
-    this.confirmPaymentButton = page.getByRole('button', { name: 'Confirm Payment' });
+    this.paymentDialog = page.getByRole('dialog', { name: 'Payment' });
+    this.applePayButton = this.paymentDialog.getByText('Card/Apple Pay', { exact: true });
+    this.confirmPaymentButton = this.paymentDialog.getByRole('button', { name: 'Confirm Payment' });
     this.paidText = page.getByText('Paid', { exact: true }).first();
   }
 
@@ -45,8 +46,9 @@ class OrderManagementPage {
 
   async payOrder() {
     await this.payForOrderButton.click({ force: true });
+    await this.paymentDialog.waitFor({ state: 'visible', timeout: 30000 });
     await this.applePayButton.evaluate((button) => button.click());
-    await this.confirmPaymentButton.click({ force: true });
+    await this.confirmPaymentButton.evaluate((button) => button.click());
     await this.page.waitForTimeout(2000);
   }
 
