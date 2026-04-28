@@ -12,18 +12,15 @@ const { SubCategory } = require("../../pages/Digtial_Menu/SubCategory.js");
 const { items } = require("../../pages/Digtial_Menu/items.js");
 dotenv.config();
 
-test("User adds Categories in Digital Menu", async ({ page }) => {
+test.only("User adds Categories in Digital Menu", async ({ page }) => {
   const login = new LoginPage(page);
   const digitalMenu = new DigitalMenuPage(page);
   const category = new Category(page);
   const subcategory = new SubCategory(page);
   const item = new items(page);
-
   await login.navigate();
   await login.login(process.env.EMAIL, process.env.PASSWORD);
-
   await expect(page).toHaveURL(/\/merchant\/dashboard/);
-
   await digitalMenu.goToDigitalMenu();
   await expect(page).toHaveURL(
     /\/merchant\/digitalmenu\/menu\/digitalMenuSection/,
@@ -31,7 +28,7 @@ test("User adds Categories in Digital Menu", async ({ page }) => {
   await category.openCategoryModal();
   await category.saveCategory(getRandomFoodCategory());
 });
-test("User adds SubCategories in Digital Menu", async ({ page }) => {
+test.only("User adds SubCategories in Digital Menu", async ({ page }) => {
   const login = new LoginPage(page);
   const digitalMenu = new DigitalMenuPage(page);
   const subcategory = new SubCategory(page);
@@ -46,19 +43,15 @@ test("User adds SubCategories in Digital Menu", async ({ page }) => {
   );
   await subcategory.openSubCategoryModal();
   await subcategory.saveSubCategory(getRandomFoodCategory());
-
-  // await page.pause();
 });
-test("User adds Items in Digital Menu", async ({ page }) => {
+test.only("User adds Items in Digital Menu", async ({ page }) => {
   const login = new LoginPage(page);
   const digitalMenu = new DigitalMenuPage(page);
   const item = new items(page);
   await login.navigate();
   await login.login(process.env.EMAIL, process.env.PASSWORD);
   await expect(page).toHaveURL(/\/merchant\/dashboard/);
-
   await digitalMenu.goToDigitalMenu();
   await item.openCreateItemModal();
   await item.saveItem(generateSubCategoryName(), generateRandomPrice());
-  // await page.pause();
 });

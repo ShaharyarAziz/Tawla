@@ -12,13 +12,11 @@ class LogOutPage {
   }
   async logout() {
     await this.avatar.click();
-
     try {
       await this.page
         .locator(".logout-btn:visible")
         .waitFor({ state: "visible", timeout: 3000 });
     } catch {
-      // fallback if click didn't trigger dropdown properly
       await this.page.locator("#dropdownToggle").dispatchEvent("click");
     }
 
