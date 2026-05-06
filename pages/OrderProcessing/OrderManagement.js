@@ -1,17 +1,28 @@
+const { expect } = require('@playwright/test');
+
 class OrderManagementPage {
   constructor(page) {
-    this.page = page;
-    this.orderManagementLink = page.getByRole('link', { name: 'Order Management' });
+    this.page = page; 
+    this.orderManagementLink = page
+      .locator('a')
+      .filter({ hasText: 'Order Management' })
+      .filter({ hasNot: page.locator('.breadcrumb-link') })
+      .first();
     this.dismissButton = page.getByRole('button', { name: 'Dismiss' });
     this.title = page.getByText('Order Management', { exact: true }).last();
     this.allOrdersTab = page.getByText('All Orders', { exact: true });
-    this.pendingOrder = page.locator('.order-management-card').filter({ hasText: 'Unpaid' }).filter({ hasText: 'Not Served' }).first();
+    this.pendingOrder = page
+      .locator('.order-management-card')
+      .filter({ has: page.getByRole('button', { name: 'View Details' }) })
+      .first();
     this.detailsTitle = page.getByText('Order Details', { exact: true }).first();
-    this.payForOrderButton = page.getByRole('button', { name: 'Pay For Order' });
+    this.payForOrderButton = page.getByRole('button', { name: /pay\s*for\s*order/i });
     this.paymentDialog = page.getByRole('dialog', { name: 'Payment' });
     this.applePayButton = this.paymentDialog.getByText('Card/Apple Pay', { exact: true });
     this.confirmPaymentButton = this.paymentDialog.getByRole('button', { name: 'Confirm Payment' });
     this.paidText = page.getByText('Paid', { exact: true }).first();
+    this.orderDetailsHeader = page.getByText(/Order\s*#\s*/i).first();
+    this.breadcrumbOrderManagement = page.getByRole('link', { name: 'Order Management', exact: true });
   }
 
   async dismissPopup() {
@@ -35,8 +46,26 @@ class OrderManagementPage {
     await this.allOrdersTab.waitFor({ state: 'visible', timeout: 30000 });
   }
 
+  async backToList() {
+    if (await this.breadcrumbOrderManagement.isVisible().catch(() => false)) {
+      await this.breadcrumbOrderManagement.click();
+      await this.title.waitFor({ state: 'visible', timeout: 30000 });
+      return;
+    }
+    await this.open();
+  }
+
+  async getOrderNumberFromDetails() {
+    const headerText = (await this.orderDetailsHeader.innerText()).trim();
+    const match = headerText.match(/Order\s*#\s*([A-Za-z0-9-]+)/i);
+    return match ? match[1] : null;
+  }
+
   async openDetails() {
-    await this.pendingOrder.getByRole('button', { name: 'View Details' }).click({ force: true });
+    await this.pendingOrder.waitFor({ state: 'visible', timeout: 30000 });
+    const viewDetails = this.pendingOrder.getByRole('button', { name: 'View Details' });
+    await viewDetails.waitFor({ state: 'visible', timeout: 30000 });
+    await viewDetails.click();
     await this.detailsTitle.waitFor({ state: 'visible', timeout: 30000 });
   }
 
@@ -45,7 +74,11 @@ class OrderManagementPage {
   }
 
   async payOrder() {
-    await this.payForOrderButton.click({ force: true });
+    await this.payForOrderButton.waitFor({ state: 'visible', timeout: 30000 });
+    await expect
+      .poll(async () => this.payForOrderButton.isEnabled().catch(() => false), { timeout: 30000 })
+      .toBeTruthy();
+    await this.payForOrderButton.click();
     await this.paymentDialog.waitFor({ state: 'visible', timeout: 30000 });
     await this.applePayButton.evaluate((button) => button.click());
     await this.confirmPaymentButton.evaluate((button) => button.click());
@@ -53,8 +86,18 @@ class OrderManagementPage {
   }
 
   async serveOrder(orderNumber) {
-    await this.order(orderNumber).getByRole('button', { name: 'Change Status' }).click({ force: true });
-    await this.order(orderNumber).getByText('Served', { exact: true }).click({ force: true });
+    const card = this.order(orderNumber);
+    await card.waitFor({ state: 'visible', timeout: 30000 });
+    await card.scrollIntoViewIfNeeded();
+
+    const changeStatus = card.getByRole('button', { name: /change status/i });
+    await changeStatus.waitFor({ state: 'visible', timeout: 30000 });
+    await changeStatus.click();
+
+    // The status option appears in a dropdown; scope to the actual option element to avoid strict-mode matches.
+    const servedOption = this.page.locator('.status-option[data-action="served"]:visible').first();
+    await servedOption.waitFor({ state: 'visible', timeout: 30000 });
+    await servedOption.click();
   }
 }
 
