@@ -22,10 +22,6 @@ test('Order Management: Orders', async ({ page }) => {
 
   const withDetails = allCards.filter({ has: page.getByRole('button', { name: 'View Details' }) });
   await expect(withDetails.first()).toBeVisible({ timeout: 30000 });
-
-  // Required flow:
-  // - If any Unpaid exists -> execute Unpaid flow only
-  // - Else -> execute Paid flow
   const unpaidCards = withDetails.filter({ has: page.getByText('Unpaid', { exact: true }) });
   const unpaidCount = await unpaidCards.count();
 
@@ -52,7 +48,6 @@ test('Order Management: Orders', async ({ page }) => {
   const canPay = payVisible ? await orderManagement.payForOrderButton.isEnabled().catch(() => false) : false;
   let paidByTest = false;
 
-  // If unpaid and Pay button is enabled, pay it. Otherwise just validate Paid when already paid.
   if (!isPaid && canPay) {
     await orderManagement.payOrder();
     await expect(orderManagement.paidText).toBeVisible({ timeout: 30000 });
@@ -60,8 +55,6 @@ test('Order Management: Orders', async ({ page }) => {
   } else if (isPaid) {
     await expect(orderManagement.paidText).toBeVisible({ timeout: 30000 });
   }
-
-  // Serve flow ONLY for orders that we paid in this test.
   const orderNumber = await orderManagement.getOrderNumberFromDetails();
   expect(orderNumber, 'Order number should be readable in details header').toBeTruthy();
 
