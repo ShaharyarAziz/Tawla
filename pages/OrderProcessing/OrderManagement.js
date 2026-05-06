@@ -93,8 +93,6 @@ class OrderManagementPage {
     const changeStatus = card.getByRole('button', { name: /change status/i });
     await changeStatus.waitFor({ state: 'visible', timeout: 30000 });
     await changeStatus.click();
-
-    // The status option appears in a dropdown; scope to the actual option element to avoid strict-mode matches.
     const servedOption = this.page.locator('.status-option[data-action="served"]:visible').first();
     await servedOption.waitFor({ state: 'visible', timeout: 30000 });
     await servedOption.click();
