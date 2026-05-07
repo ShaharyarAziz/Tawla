@@ -9,9 +9,7 @@ class TakeOrderPage {
     this.plusButton = page.locator('#addItemModal .quantity-btn.plus-btn').first();
     this.addItemButton = page.locator('#addItemModal button.btn-add-item').first();
     this.tableNameDropdown = page.getByRole('combobox').nth(1);
-    this.tableNameOption = page.getByRole('option', { name: 'Test Table' });
     this.tableNumberDropdown = page.getByRole('combobox').nth(2);
-    this.tableNumberOption = page.getByRole('option', { name: '5' });
     this.placeOrderButton = page.getByRole('button', { name: 'Place Order' });
   }
 
@@ -51,9 +49,12 @@ class TakeOrderPage {
 
   async selectTable() {
     await this.tableNameDropdown.click();
-    await this.tableNameOption.click();
+    await this.page.keyboard.press('ArrowDown');
+    await this.page.keyboard.press('Enter');
+
     await this.tableNumberDropdown.click();
-    await this.tableNumberOption.click();
+    await this.page.keyboard.press('ArrowDown');
+    await this.page.keyboard.press('Enter');
   }
 
   async placeOrder() {
