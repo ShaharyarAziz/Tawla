@@ -19,14 +19,13 @@ class items {
 
     this.categoryNameDropdown = page.locator("span#category-label");
 
-    this.Marblehat = page
+    this.Spicy_Biryani = page
       .locator("#category-dropdown")
-      .getByText("Modern Marble Hat");
+      .getByText("Spicy Biryani");
 
     this.RecycledCottonCheese = page
       .locator("#category-dropdown")
       .getByText("Recycled Cotton Cheese");
-
     this.subCategoryDropdown = page.locator(
       '[data-dropdown="subcategory-dropdown"]',
     );
@@ -62,7 +61,7 @@ class items {
     }
 
     if (!found) {
-      throw new Error(`❌ ${text} not found in subcategory dropdown`);
+      throw new Error(`${text} not found in subcategory dropdown`);
     }
   }
 
@@ -78,8 +77,8 @@ class items {
     await this.categoryNameDropdown.click();
     await this.RecycledCottonCheese.click();
 
-    await this.Marblehat.scrollIntoViewIfNeeded();
-    await this.Marblehat.click();
+    await this.Spicy_Biryani.scrollIntoViewIfNeeded();
+    await this.Spicy_Biryani.click();
 
     // ✅ Open subcategory dropdown
     await this.subCategoryDropdown.click();
