@@ -8,7 +8,7 @@ test("User LogOut", async ({ page }) => {
   const logout = new LogOutPage(page);
   const login = new LoginPage(page);
   await logout.navigate();
-  await login.login(process.env.EMAIL, process.env.PASSWORD);
+  await login.loginAndWaitForDashboard(process.env.EMAIL, process.env.PASSWORD);
   await expect(page).toHaveURL(/dashboard/);
   await logout.logout();
 

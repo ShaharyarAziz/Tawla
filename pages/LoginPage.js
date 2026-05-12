@@ -9,13 +9,24 @@ class LoginPage {
   }
 
   async navigate() {
-    await this.page.goto(URLS.login);
+    await this.page.goto(URLS.login, { waitUntil: 'domcontentloaded' });
   }
 
   async login(email, pass) {
+    await this.email.waitFor({ state: 'visible', timeout: 30000 });
     await this.email.fill(email);
     await this.password.fill(pass);
     await this.loginBtn.click();
+  }
+
+  async loginAndWaitForDashboard(email, pass) {
+    await this.email.waitFor({ state: 'visible', timeout: 30000 });
+    await this.email.fill(email);
+    await this.password.fill(pass);
+    await Promise.all([
+      this.page.waitForURL(/\/merchant\/dashboard/, { timeout: 30000 }),
+      this.loginBtn.click(),
+    ]);
   }
 } 
 

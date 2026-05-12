@@ -7,7 +7,7 @@ class SubCategory {
       .locator("span")
       .first();
     this.dropdownOptions = this.page.getByRole("option", {
-      name: "Recycled Cotton Cheese",
+      name: "All Desert",
     });
     this.enterSubCategoryNameInput = page.locator("input#sub_category_name");
     this.imageUploadInput = page.locator("#subcat_image");

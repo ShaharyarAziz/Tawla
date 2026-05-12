@@ -9,26 +9,39 @@ class items {
     this.createItemBtn = page.getByText("+ Create Item");
     this.item_name = page.locator("input#item_name");
 
-    this.foodtypeDropdown = page.locator(
-      '[data-dropdown="food-type-dropdown"]',
+    // this.foodtypeDropdown = page.locator(
+    //   'div.custom-dropdown-trigger[data-dropdown="food-type-dropdown"]',
+    // );
+    this.foodTypeArrow = page.locator(
+      'div.custom-dropdown-trigger[data-dropdown="food-type-dropdown"] svg.dropdown-arrow',
     );
+    this.foodtypeMenu = page.locator("#food-type-dropdown");
 
-    this.vegeterian = page.getByText("Vegetarian", { exact: true });
-    this.nonVegeterian = page.getByText("Non-Vegetarian", { exact: true });
+    this.vegeterian = this.foodtypeMenu.getByText("Vegetarian", {
+      exact: true,
+    });
+    this.nonVegeterian = this.foodtypeMenu.getByText("Non-Vegetarian", {
+      exact: true,
+    });
     this.item_price = page.locator("input#item_price");
 
     this.categoryNameDropdown = page.locator("span#category-label");
+    this.categoryDropdown = page.locator(
+      'div.custom-dropdown-trigger[data-dropdown="category-dropdown"]',
+    );
+    this.categoryMenu = page.locator("#category-dropdown");
 
-    this.Spicy_Biryani = page
-      .locator("#category-dropdown")
-      .getByText("Spicy Biryani");
+    this.Spicy_Biryani = this.categoryMenu.getByText("All Desert", {
+      exact: true,
+    });
 
-    this.RecycledCottonCheese = page
-      .locator("#category-dropdown")
-      .getByText("Recycled Cotton Cheese");
+    this.RecycledCottonCheese = this.categoryMenu.getByText("Drinks", {
+      exact: true,
+    });
     this.subCategoryDropdown = page.locator(
       '[data-dropdown="subcategory-dropdown"]',
     );
+    this.subCategoryMenu = page.locator("#subcategory-dropdown");
 
     this.fileInput = page.locator("#item_image");
     this.itemDescription = page.locator("#description");
@@ -40,14 +53,14 @@ class items {
 
   // 🔥 NEW: reusable scroll function
   async scrollAndSelectSubCategory(text) {
-    const container = this.page.locator("#subcategory-dropdown");
+    const container = this.subCategoryMenu;
 
     await container.waitFor({ state: "visible" });
 
     let found = false;
 
     for (let i = 0; i < 15; i++) {
-      const item = container.locator("span", { hasText: text });
+      const item = container.getByText(text, { exact: true });
 
       if ((await item.count()) > 0) {
         await item.first().click();
@@ -67,14 +80,16 @@ class items {
 
   async saveItem(name, price) {
     await this.item_name.fill(name);
+    await this.page.waitForTimeout(3000);
 
-    await this.foodtypeDropdown.click();
+    await this.foodTypeArrow.click({ force: true });
     await this.vegeterian.click();
     await this.nonVegeterian.click();
     await this.item_price.click();
     await this.item_price.fill(price);
 
-    await this.categoryNameDropdown.click();
+    await this.categoryDropdown.click();
+    await this.categoryMenu.waitFor({ state: "visible" });
     await this.RecycledCottonCheese.click();
 
     await this.Spicy_Biryani.scrollIntoViewIfNeeded();
@@ -84,7 +99,8 @@ class items {
     await this.subCategoryDropdown.click();
 
     // 🔥 USE SCROLL FUNCTION HERE
-    await this.scrollAndSelectSubCategory("Spicy Fries");
+    await this.scrollAndSelectSubCategory("Strawberry with Belgian chocolate");
+    await this.scrollAndSelectSubCategory("Milkshakes");
 
     await this.fileInput.setInputFiles(
       "E:/Automation_Testing/Tawla_Automation/utils/png-transparent-full-breakfast-british-cuisine-english-cuisine-breakfast-sausage-woodbury-commons-outlet-food-breakfast-recipe-thumbnail.png",

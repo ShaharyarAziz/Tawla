@@ -45,7 +45,6 @@ test("User adds SubCategories in Digital Menu", async ({ page }) => {
   await subcategory.saveSubCategory(getRandomFoodCategory());
 });
 test("User adds Items in Digital Menu", async ({ page }) => {
-  test.setTimeout(120000);
   const login = new LoginPage(page);
   const digitalMenu = new DigitalMenuPage(page);
   const item = new items(page);
