@@ -11,6 +11,17 @@ const { Category } = require("../../pages/Digtial_Menu/Category.js");
 const { SubCategory } = require("../../pages/Digtial_Menu/SubCategory.js");
 const { items } = require("../../pages/Digtial_Menu/items.js");
 dotenv.config();
+test("User adds Items in Digital Menu", async ({ page }) => {
+  const login = new LoginPage(page);
+  const digitalMenu = new DigitalMenuPage(page);
+  const item = new items(page);
+  await login.navigate();
+  await login.login(process.env.EMAIL, process.env.PASSWORD);
+  await expect(page).toHaveURL(/\/merchant\/dashboard/);
+  await digitalMenu.goToDigitalMenu();
+  await item.openCreateItemModal();
+  await item.saveItem(generateSubCategoryName(), generateRandomPrice());
+});
 
 test("User adds Categories in Digital Menu", async ({ page }) => {
   const login = new LoginPage(page);
@@ -43,15 +54,4 @@ test("User adds SubCategories in Digital Menu", async ({ page }) => {
   );
   await subcategory.openSubCategoryModal();
   await subcategory.saveSubCategory(getRandomFoodCategory());
-});
-test("User adds Items in Digital Menu", async ({ page }) => {
-  const login = new LoginPage(page);
-  const digitalMenu = new DigitalMenuPage(page);
-  const item = new items(page);
-  await login.navigate();
-  await login.login(process.env.EMAIL, process.env.PASSWORD);
-  await expect(page).toHaveURL(/\/merchant\/dashboard/);
-  await digitalMenu.goToDigitalMenu();
-  await item.openCreateItemModal();
-  await item.saveItem(generateSubCategoryName(), generateRandomPrice());
 });

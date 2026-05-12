@@ -80,8 +80,7 @@ class items {
 
   async saveItem(name, price) {
     await this.item_name.fill(name);
-    await this.page.waitForTimeout(3000);
-
+    await this.page.waitForTimeout(5000);
     await this.foodTypeArrow.click({ force: true });
     await this.vegeterian.click();
     await this.nonVegeterian.click();
